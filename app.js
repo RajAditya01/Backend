@@ -49,12 +49,14 @@
 //     console.log(`Server is running at Port no 3000`);
 // });
 
-
+const dotenv =require("dotenv");
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
-const DB = 'mongodb+srv://adityavishal903:12345678@abc@cluster0.z396uwj.mongodb.net/mernstack';
+dotenv.config({path: './config.env'})
+
+const DB = process.env.DATABASE;
 
 mongoose.connect(DB, {
     useNewUrlParser: true,
