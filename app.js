@@ -55,19 +55,11 @@ const express = require('express');
 const app = express();
 
 dotenv.config({path: './config.env'})
+require('./DB/conn');
 
-const DB = process.env.DATABASE;
+const PORT=process.env.PORT;
 
-mongoose.connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-}).then(() => {
-    console.log(`Connection successful`);
-}).catch((err) => {
-    console.log(`No connection`);
-})
+
 
 // Middleware
 const middleware = (req, res, next) => {
@@ -95,8 +87,7 @@ app.get('/signup', (req, res) => {
     res.send(`Hello world from the server`)
 });
 
-console.log(`Subscribe to my channel`);
 
 app.listen(3000, () => {
-    console.log(`Server is running at Port no 3000`);
+    console.log(`Server is running at Port no ${PORT}`);
 });
