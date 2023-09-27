@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     phone: {
-        type:Number,
+        type:Number0,
         required: true
     },
     Work: {
