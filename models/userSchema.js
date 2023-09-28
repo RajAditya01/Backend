@@ -34,5 +34,9 @@ module.exports = User;
 
 // we are hashing the password
 userSchema.pre('save',async function(next){
-    
-})
+    if(this.isModified('password')) {
+        this.password = bcrypt.hash(this.password,12);
+        this.cpassword = bcrypt.hash(this.cpassword,12);
+    }
+    next();
+});
