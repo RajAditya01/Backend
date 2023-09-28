@@ -47,14 +47,32 @@ router.post('/register', async (req, res) => {
             return res.status(422).json({ error: "Email already exists" });
         }
 
-        const newUser = new User({ name, email, phone, work, password, cpassword });
+        const user = new User({ name, email, phone, work, password, cpassword });
 
-        await newUser.save();
+        await user.save();
         res.status(201).json({ message: "User registered successfully!" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Failed to register" });
     }
 });
+
+
+//login route
+router.post('/signin',async(req,res)=>{
+    try{
+        const {email, password} = req.body;
+
+        if(!email || !password){
+            return res.status(400).json({error:"Plz filled the data"})
+        }
+
+        const UserLogin = await user.findOne({email:email});
+        res.json({message:"user Signin Successfully" })
+        
+    }catch(err){
+        console.log(err);
+    }
+})
 
 module.exports = router;
