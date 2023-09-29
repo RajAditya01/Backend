@@ -51,7 +51,11 @@ router.post('/register', async (req, res) => {
 
         const user = new User({ name, email, phone, work, password, cpassword });
 
-        await user.save();
+        // await User.create({
+        //     name, email, phone, work, password, cpassword 
+        // })
+
+        // await user.save();
         res.status(201).json({ message: "User registered successfully!" });
     } catch (error) {
         console.log(error);
@@ -61,20 +65,44 @@ router.post('/register', async (req, res) => {
 
 
 //login route
-router.post('/signin',async(req,res)=>{
-    try{
-        const {email, password} = req.body;
+// router.post('/signin',async(req,res)=>{
+//     try{
+//         const {email, password} = req.body;
 
-        if(!email || !password){
-            return res.status(400).json({error:"Plz filled the data"})
+//         if(!email || !password){
+//             return res.status(400).json({error:"Plz filled the data"})
+//         }
+
+//         const user = new User({ name, email, phone, work, password, cpassword });
+
+//         const UserLogin = await user.findOne({email:email});
+//         res.json({message:"user Signin Successfully" })
+        
+//     }catch(err){
+//         console.log(err);
+//     }
+// })
+
+
+router.post('/signin', async (req, res) => {
+    try {
+        const { email, password, name } = req.body; // Add 'name' to the destructuring
+        
+        if (!email || !password || !name) { // Check for 'name' in the validation
+            return res.status(400).json({ error: "Please fill in all the required data" });
         }
 
-        const UserLogin = await user.findOne({email:email});
-        res.json({message:"user Signin Successfully" })
+        // Create a new user object with the provided data
+        const user = new User({ name, email, password });
         
-    }catch(err){
+        // Assuming 'user' has a 'findOne' method, find the user by email
+        const UserLogin = await User.findOne({ email: email });
+        
+        res.json({ message: "User Signin Successfully" });
+    } catch (err) {
         console.log(err);
     }
-})
+});
+
 
 module.exports = router;

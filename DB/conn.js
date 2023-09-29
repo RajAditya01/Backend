@@ -1,5 +1,6 @@
 const mongoose =require('mongoose');
 const DB = process.env.DATABASE;
+require("dotenv").config();
 console.log(DB);
 mongoose.connect(DB, {
 }).then(() => {
